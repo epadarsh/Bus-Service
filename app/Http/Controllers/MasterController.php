@@ -76,7 +76,7 @@ class MasterController extends Controller
             $occuranceId = DB::table('occurance_timetable')
                 ->where('location_id', $picup_location_id)
                 ->orWhere('location_id', $destination_location_id)
-                ->whereTime('time', '<', Date::parse($time)->subHours(3));
+                ->whereTime('time', '<', Date::parse($time)->addHour());
 
             $output = [];
 
