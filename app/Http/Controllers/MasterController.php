@@ -12,7 +12,7 @@ class MasterController extends Controller
      * @param * @param Request $request
      * @return array
      * @throws
-     * @created by adarshep@protracked.in on (08 Jan 2020 at 6:08 PM)
+     * @created by adarshepep@gmail.com on (08 Jan 2020 at 6:08 PM)
      */
     public function fetchData(Request $request)
     {
