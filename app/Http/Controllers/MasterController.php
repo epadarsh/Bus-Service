@@ -22,14 +22,14 @@ class MasterController extends Controller
         $time = $request->time;
         $tripType = $request->trip_type;
 
+        $occuranceId = DB::table('occurance_timetable')
+            ->where('location_id', $picup_location_id)
+            ->orWhere('location_id', $destination_location_id);
+
         //Services with type 1
-
         if ($picup_location_id && $destination_location_id && $time && $tripType == 1) {
-            $occuranceId = DB::table('occurance_timetable')
-                ->where('location_id', $picup_location_id)
-                ->orWhere('location_id', $destination_location_id)
-                ->whereTime('time', '<', Date::parse($time)->subHours(3));
 
+            (clone $occuranceId)->whereTime('time', '<', Date::parse($time)->subHours(3));
             $output = [];
 
             foreach ($occuranceId->cursor() as $occurance) {
@@ -73,11 +73,8 @@ class MasterController extends Controller
         //Services with type 2
 
         if ($picup_location_id && $destination_location_id && $time && $tripType == 2) {
-            $occuranceId = DB::table('occurance_timetable')
-                ->where('location_id', $picup_location_id)
-                ->orWhere('location_id', $destination_location_id)
-                ->whereTime('time', '<', Date::parse($time)->addHour());
 
+            (clone $occuranceId)->whereTime('time', '<', Date::parse($time)->addHour());
             $output = [];
 
             foreach ($occuranceId->cursor() as $occurance) {
